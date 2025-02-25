@@ -3,14 +3,14 @@
     "name": "Cookie Logger",
     "version": "1.0",
     "description": "Logs cookies of the current website to the console",
+    "action": {
+      "default_popup": "popup.html",
+      "default_title": "Get Cookies",
+      "default_icon": "cookei.png"
+    },
     "permissions": ["cookies", "activeTab", "scripting", "tabs"],
     "host_permissions": ["<all_urls>"],
     "background": {
       "service_worker": "background.js"
-    },
-    "action": {
-      "default_popup": "popup.html",
-      "default_title": "Get Cookies",
-      "default_logo": "cookei.png"
     }
   }
