@@ -3,10 +3,34 @@
 <head>
     <title>Cookie Logger</title>
     <script src="popup.js" defer></script>
+    <style>
+        /* Optional styling for the 'Show More' link and scramble button */
+        .showMore {
+            color: blue;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        .scrambleBtn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 5px 10px;
+        }
+        .scrambleBtn:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
 <body>
     <button id="logCookies">Log Cookies</button>
-    <!-- <a> element to display the cookie_name value -->
+
+    <!-- <a> element to display the cookie names -->
     <a href="#" id="cookieDisplay">Cookie Name will appear here</a>
+
+    <!-- Table to display the cookies' details -->
+    <table id="cookieTable" border="1" style="width: 100%; margin-top: 20px;">
+        <!-- Table content will be populated by JavaScript -->
+    </table>
 </body>
 </html>
