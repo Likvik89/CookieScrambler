@@ -1,14 +1,14 @@
 // Set a character limit for the cookie value
 const valueLimit = 50; // You can change this to any value you like
 
-// Function to scramble a string (cookie value)
-function scrambleString(str) {
-    let arr = str.split('');
-    for (let i = arr.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]]; // Swap elements
+// Function to generate a random string of a specific length
+function generateRandomString(length) {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * characters.length));
     }
-    return arr.join('');
+    return result;
 }
 
 document.getElementById("logCookies").addEventListener("click", () => {
@@ -59,7 +59,7 @@ document.getElementById("logCookies").addEventListener("click", () => {
 
                 // Add the Scramble button and the other data
                 row.innerHTML = `
-                    <td><button class="scrambleBtn" data-index="${i}">Scramble</button></td>
+                    <td><button class="scrambleBtn" data-index="${i}" data-name="${cookie_name[i]}" data-domain="${cookie_domain[i]}">Scramble</button></td>
                     <td>${cookie_name[i]}</td>
                     <td>${cookie_domain[i]}</td>
                     <td>
@@ -94,12 +94,30 @@ document.getElementById("logCookies").addEventListener("click", () => {
             document.querySelectorAll(".scrambleBtn").forEach(button => {
                 button.addEventListener("click", (event) => {
                     const index = event.target.dataset.index;
-                    const scrambledValue = scrambleString(cookie_value[index]); // Scramble the cookie value
-                    cookie_value[index] = scrambledValue; // Update the value in the array
+                    const cookieName = event.target.dataset.name;
+                    const cookieDomain = event.target.dataset.domain;
 
-                    // Update the displayed value in the table
-                    const valueCell = event.target.closest("tr").querySelector(".valueText");
-                    valueCell.innerHTML = scrambledValue.slice(0, valueLimit) + '...'; // Show the scrambled value truncated
+                    // Generate a scrambled random value of the same length as the original value
+                    const scrambledValue = generateRandomString(cookie_value[index].length);
+
+                    // Scramble the cookie by updating it in the browser using chrome.cookies.set
+                    chrome.cookies.set({
+                        url: `http://${cookieDomain}`, // We use the domain to form the URL
+                        name: cookieName,
+                        value: scrambledValue,
+                        domain: cookieDomain, // Specify the domain
+                        path: '/', // Path of the cookie
+                        secure: true, // Assuming secure cookies
+                        httpOnly: false // Assuming it's not httpOnly
+                    }, (updatedCookie) => {
+                        cookie_value[index] = scrambledValue; // Update the local cookie value in the array
+                        console.log(`Cookie scrambled:`, updatedCookie);
+                       
+
+                        // Update the displayed value in the table
+                        const valueCell = event.target.closest("tr").querySelector(".valueText");
+                        valueCell.innerHTML = scrambledValue.slice(0, valueLimit) + '...'; // Show the scrambled value truncated
+                    });
                 });
             });
         });
