@@ -10,6 +10,7 @@
     },
     "action": {
       "default_popup": "popup.html",
-      "default_title": "Get Cookies"
+      "default_title": "Get Cookies",
+      "default_logo": "cookei.png"
     }
   }
