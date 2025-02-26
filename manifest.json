@@ -1,7 +1,7 @@
   {
     "manifest_version": 3,
     "name": "Cookie Logger",
-    "version": "0.1.9",
+    "version": "0.2.9.5",
     "description": "Scrambles the value of cookies on websites. (Often it does it sometimes)",
     "action": {
       "default_popup": "popup.html",
