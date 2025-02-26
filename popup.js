@@ -59,7 +59,7 @@ document.getElementById("logCookies").addEventListener("click", () => {
 
                 // Add the Scramble button and the other data
                 row.innerHTML = `
-                    <td><button class="scrambleBtn" data-index="${i}" data-name="${cookie_name[i]}" data-domain="${cookie_domain[i]}">Scramble</button></td>
+                    <td><button class="scrambleBtn" data-index="${i}" data-name="${cookie_name[i]}" data-domain="${cookie_domain[i]}">Crumble</button></td>
                     <td>${cookie_name[i]}</td>
                     <td>${cookie_domain[i]}</td>
                     <td>
