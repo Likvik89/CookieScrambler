@@ -43,7 +43,7 @@ document.getElementById("logCookies").addEventListener("click", () => {
             // Create table header
             const headerRow = document.createElement("tr");
             headerRow.innerHTML = `
-                <th>Scramble</th>
+                <th>Crumble</th>
                 <th>Cookie Name</th>
                 <th>Domain</th>
                 <th>Value</th>
