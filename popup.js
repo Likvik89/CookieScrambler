@@ -18,7 +18,9 @@ document.getElementById("logCookies").addEventListener("click", () => {
         alert("Cookies are already shown");
         logged = 0
     }else{
-        logged += 1 
+        logged += 1
+        // Show the "Clear Cookies" button
+        document.getElementById("feelLucky").style.display = "inline-block"; 
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
             chrome.cookies.getAll({ url: tabs[0].url }, (cookies) => {
                 console.log("Cookies for", tabs[0].url, ":", cookies);
@@ -138,9 +140,52 @@ document.getElementById("logCookies").addEventListener("click", () => {
                             // Update the displayed value in the table
                             const valueCell = event.target.closest("tr").querySelector(".valueText");
                             valueCell.innerHTML = scrambledValue.slice(0, valueLimit) + '...'; // Show the scrambled value truncated
+
                         });
                     });
                 });
         });
     }
 });
+
+/*// feeling lucky button
+document.getElementById("feelLucky").addEventListener("click", () => {
+        if (cookie_name.length === 0){
+            return null;
+        }else {
+            if (tabs.length > 0) {
+                const urlObj = new URL(tabs[0].url); // Define urlObj here before using it
+
+                // Select a random cookie index
+                const luck = Math.floor(Math.random() * cookie_name.length);
+
+                // Generate a scrambled random value
+                const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+                let result = '';
+                for (let i = 0; i < cookie_value[luck].length; i++) {
+                    result += characters.charAt(Math.floor(Math.random() * characters.length));
+                }
+
+                // Construct the base URL
+                const baseUrl = `${urlObj.protocol}//${urlObj.hostname}`;
+
+                // Set the scrambled cookie value
+                chrome.cookies.set({
+                    url: baseUrl,
+                    name: cookie_name[luck],
+                    value: result,
+                    domain: urlObj.hostname, // Use the domain from the URL
+                    path: '/',
+                    secure: urlObj.protocol === "https:", // Ensure secure for HTTPS
+                    httpOnly: false
+                }, (updatedCookie) => {
+                    if (chrome.runtime.lastError) {
+                        console.error("Error setting cookie:", chrome.runtime.lastError);
+                    } else {
+                        console.log(`Random cookie ${cookie_name[luck]} scrambled to:`, result);
+                    }
+                });
+            } else {
+                console.error("No active tabs found");
+            }
+        }});*/
