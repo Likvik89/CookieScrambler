@@ -111,9 +111,9 @@ document.getElementById("logCookies").addEventListener("click", () => {
                         name: cookieName,
                         value: scrambledValue,
                         //domain: cookieDomain, 
-                        path: '/',
-                        secure: urlObj.protocol === "https:", // Ensure secure is true for HTTPS sites
-                        httpOnly: false
+                        //path: '/',
+                        //secure: urlObj.protocol === "https:", // Ensure secure is true for HTTPS sites
+                        //httpOnly: false
                     }, (updatedCookie) => {
                         if (chrome.runtime.lastError) {
                             console.error("Error setting cookie:", chrome.runtime.lastError);
