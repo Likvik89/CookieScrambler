@@ -93,25 +93,36 @@ document.getElementById("logCookies").addEventListener("click", () => {
             // Add event listener for "Scramble" button
             document.querySelectorAll(".scrambleBtn").forEach(button => {
                 button.addEventListener("click", (event) => {
-                    const index = event.target.dataset.index;
-                    const cookieName = event.target.dataset.name;
-                    const cookieDomain = event.target.dataset.domain;
+                    const index = event.currentTarget.dataset.index;
+                    const cookieName = event.currentTarget.dataset.name;
+                    const cookieDomain = event.currentTarget.dataset.domain.replace(/^\./, '');
+
 
                     // Generate a scrambled random value of the same length as the original value
                     const scrambledValue = generateRandomString(cookie_value[index].length);
 
                     // Scramble the cookie by updating it in the browser using chrome.cookies.set
+
+                    const urlObj = new URL(tabs[0].url);
+                    const baseUrl = `${urlObj.protocol}//${urlObj.hostname}`;
+                    
                     chrome.cookies.set({
-                        url: `http://${cookieDomain}`, // We use the domain to form the URL
+                        url: baseUrl,  // Use only protocol + hostname
                         name: cookieName,
                         value: scrambledValue,
-                        domain: cookieDomain, // Specify the domain
-                        path: '/', // Path of the cookie
-                        secure: true, // Assuming secure cookies
-                        httpOnly: false // Assuming it's not httpOnly
+                        //domain: cookieDomain, 
+                        path: '/',
+                        secure: urlObj.protocol === "https:", // Ensure secure is true for HTTPS sites
+                        httpOnly: false
                     }, (updatedCookie) => {
-                        cookie_value[index] = scrambledValue; // Update the local cookie value in the array
-                        console.log(`Cookie scrambled:`, updatedCookie);
+                        if (chrome.runtime.lastError) {
+                            console.error("Error setting cookie:", chrome.runtime.lastError);
+                        } else {
+                            cookie_value[index] = scrambledValue; // Update local array
+                            console.log(`Cookie scrambled:`, updatedCookie);
+                            console.log("cookie value", scrambledValue);
+                        }
+                    });
                        
 
                         // Update the displayed value in the table
@@ -122,4 +133,4 @@ document.getElementById("logCookies").addEventListener("click", () => {
             });
         });
     });
-});
+;
