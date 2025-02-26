@@ -31,6 +31,8 @@ document.getElementById("logCookies").addEventListener("click", () => {
             } else {
                 document.getElementById("cookieDisplay").innerHTML = "No cookies found.";
             }
+             // Clear the cookie display text (no cookie names here anymore)
+             document.getElementById("cookieDisplay").innerHTML = "";
 
             // Create and populate the table with cookie details
             const table = document.getElementById("cookieTable");
@@ -41,7 +43,7 @@ document.getElementById("logCookies").addEventListener("click", () => {
             // Create table header
             const headerRow = document.createElement("tr");
             headerRow.innerHTML = `
-                <th>Scramble</th>
+                <th>Crumble</th>
                 <th>Cookie Name</th>
                 <th>Domain</th>
                 <th>Value</th>
@@ -95,7 +97,7 @@ document.getElementById("logCookies").addEventListener("click", () => {
                 button.addEventListener("click", (event) => {
                     const index = event.currentTarget.dataset.index;
                     const cookieName = event.currentTarget.dataset.name;
-                    const cookieDomain = event.currentTarget.dataset.domain.replace(/^\./, '');
+                    //const cookieDomain = event.currentTarget.dataset.domain.replace(/^\./, '');
 
 
                     // Generate a scrambled random value of the same length as the original value
