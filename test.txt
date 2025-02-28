@@ -1,0 +1,65 @@
+// paste this code into endless.horse, to initiate the test
+
+
+(function() {
+    // Clear the current page content
+    document.body.innerHTML = '';
+
+    // Create the HTML content dynamically
+    var htmlContent = `
+        <div style="font-family: Arial, sans-serif; margin: 0; padding: 20px;">
+            <div style="max-width: 400px; margin: 0 auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px;">
+                <h2>Set Your Preferences</h2>
+                <form id="user-form">
+                    <label for="username">Name:</label>
+                    <input type="text" id="username" required style="width: 100%; padding: 8px; margin-bottom: 12px; border: 1px solid #ccc; border-radius: 4px;">
+
+                    <label for="favorite-fruit">Favorite Fruit:</label>
+                    <input type="text" id="favorite-fruit" required style="width: 100%; padding: 8px; margin-bottom: 12px; border: 1px solid #ccc; border-radius: 4px;">
+
+                    <label for="age">Age:</label>
+                    <input type="number" id="age" required style="width: 100%; padding: 8px; margin-bottom: 12px; border: 1px solid #ccc; border-radius: 4px;">
+
+                    <button type="submit" id="submit-btn" style="padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;">Submit</button>
+                </form>
+            </div>
+        </div>
+    `;
+
+    // Inject the new HTML content into the page
+    document.body.innerHTML = htmlContent;
+
+    // Function to create a cookie
+    function createCookie(name, value, days) {
+        var expires = "";
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + (value || "") + expires + "; path=/";
+    }
+
+    // Function to handle form submission
+    document.getElementById('user-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        // Get user inputs
+        var username = document.getElementById('username').value;
+        var favoriteFruit = document.getElementById('favorite-fruit').value;
+        var age = document.getElementById('age').value;
+
+        // Create cookies with user input values
+        createCookie('username', username, 7);
+        createCookie('favorite-fruit', favoriteFruit, 7);
+        createCookie('age', age, 7);
+
+        // Change the submit button to show that it's been submitted
+        var submitButton = document.getElementById('submit-btn');
+        submitButton.textContent = 'Submitted';
+        submitButton.style.backgroundColor = '#D3D3D3'; // Change to a greyish color
+        submitButton.style.color = '#A9A9A9'; // Darker grey text
+        submitButton.style.cursor = 'not-allowed'; // Change cursor to show it's disabled
+        submitButton.disabled = true; // Disable the button after submission
+    });
+})();
