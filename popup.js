@@ -20,7 +20,7 @@ document.getElementById("logCookies").addEventListener("click", () => {
     }else{
         logged += 1
         // Show the "Clear Cookies" button
-        document.getElementById("feelLucky").style.display = "inline-block"; 
+        //document.getElementById("feelLucky").style.display = "inline-block"; 
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
             chrome.cookies.getAll({ url: tabs[0].url }, (cookies) => {
                 console.log("Cookies for", tabs[0].url, ":", cookies);
